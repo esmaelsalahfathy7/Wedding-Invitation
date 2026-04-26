@@ -146,8 +146,8 @@ export default function EnvelopeExperience({ onComplete }) {
                     top: '40%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '40px',
-                    height: '40px',
+                    width: '50px',
+                    height: '50px',
                     borderRadius: '50%',
                     background: 'radial-gradient(circle, #d4af37 0%, #aa8b2b 100%)',
                     boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
@@ -157,7 +157,7 @@ export default function EnvelopeExperience({ onComplete }) {
                     alignItems: 'center'
                   }}
                 >
-                  <span style={{ fontFamily: 'var(--font-playfair)', color: '#2a220a', fontSize: '1.2rem' }}>E&J</span>
+                  <span style={{ fontFamily: 'var(--font-playfair)', color: '#2a220a', fontSize: '1.2rem' }}>A&R</span>
                 </div>
               )}
             </motion.div>
