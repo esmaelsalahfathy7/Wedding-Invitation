@@ -1,66 +1,49 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { useState } from 'react';
+import EnvelopeExperience from '../components/EnvelopeExperience';
+import Countdown from '../components/Countdown';
+import Location from '../components/Location';
+import GuestMessages from '../components/GuestMessages';
+import RSVP from '../components/RSVP';
+import PhotoUpload from '../components/PhotoUpload';
 
 export default function Home() {
+  const [isOpened, setIsOpened] = useState(false);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main style={{ minHeight: '100vh', position: 'relative' }}>
+      <EnvelopeExperience onComplete={() => setIsOpened(true)} />
+      
+      {isOpened && (
+        <div style={{ opacity: 1, animation: 'fadeIn 2s ease-in-out' }}>
+          <style>{`
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+          `}</style>
+          
+          {/* Background ambient glow effects across the scrollable page */}
+          <div className="cinematic-glow" style={{ top: '10%', left: '-10%', width: '500px', height: '500px' }}></div>
+          <div className="cinematic-glow" style={{ top: '40%', right: '-10%', width: '400px', height: '400px' }}></div>
+          <div className="cinematic-glow" style={{ bottom: '10%', left: '20%', width: '600px', height: '600px', opacity: 0.5 }}></div>
+
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <Countdown />
+            <Location />
+            <GuestMessages />
+            <RSVP />
+            <PhotoUpload />
+            
+            <footer style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+              <p style={{ fontFamily: 'var(--font-playfair)', fontSize: '1.5rem', letterSpacing: '2px', color: 'var(--gold-accent)' }}>
+                We look forward to celebrating with you.
+              </p>
+              <div style={{ width: '50px', height: '1px', background: 'var(--gold-accent)', margin: '2rem auto', opacity: 0.5 }}></div>
+            </footer>
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      )}
+    </main>
   );
 }
