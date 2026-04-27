@@ -4,6 +4,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export const saveMessage = async (name, messageText, drawingDataUrl) => {
   try {
+    console.log("Adding message...");
     const docRef = await addDoc(collection(db, "messages"), {
       name: name || "Anonymous",
       text: messageText || "",
@@ -47,38 +48,76 @@ export const saveRSVP = async (name, attending, additionalMessage) => {
   }
 };
 
-export const uploadFile = async (file) => {
-  return new Promise((resolve, reject) => {
-    if (!file) {
-      reject("No file provided");
-      return;
-    }
-    const storageRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+// export const uploadFile = async (file) => {
+//   return new Promise((resolve, reject) => {
+//     if (!file) {
+//       reject("No file provided");
+//       return;
+//     }
+//     const storageRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
+//     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // can track progress if needed
-      },
-      (error) => {
-        console.error("Upload failed:", error);
-        reject(error);
-      },
-      async () => {
-        try {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          // Save metadata to firestore
-          await addDoc(collection(db, "files"), {
-            name: file.name,
-            url: downloadURL,
-            timestamp: serverTimestamp(),
-          });
-          resolve({ success: true, url: downloadURL, name: file.name });
-        } catch (e) {
-          reject(e);
-        }
-      }
-    );
-  });
+//     uploadTask.on(
+//       "state_changed",
+//       (snapshot) => {
+//         // can track progress if needed
+//       },
+//       (error) => {
+//         console.error("Upload failed:", error);
+//         reject(error);
+//       },
+//       async () => {
+//         try {
+//           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+//           // Save metadata to firestore
+//           await addDoc(collection(db, "files"), {
+//             name: file.name,
+//             url: downloadURL,
+//             timestamp: serverTimestamp(),
+//           });
+//           resolve({ success: true, url: downloadURL, name: file.name });
+//         } catch (e) {
+//           reject(e);
+//         }
+//       }
+//     );
+//   });
+// };
+
+export const uploadFile = async (file) => {
+  try {
+    if (!file) {
+      return { success: false, error: "No file provided" };
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: data.error || "Upload failed",
+      };
+    }
+
+    return {
+      success: true,
+      id: data.id,
+      name: file.name,
+    };
+  } catch (error) {
+    console.error("Upload failed:", error);
+
+    return {
+      success: false,
+      error,
+    };
+  }
 };

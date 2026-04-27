@@ -55,7 +55,7 @@ export default function GuestMessages() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="section-container"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -71,19 +71,19 @@ export default function GuestMessages() {
 
       <div className="glass-card" style={{ width: '100%', maxWidth: '600px', marginBottom: '4rem' }}>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-          <input 
-            type="text" 
-            placeholder="Your Name" 
-            className="input-dark" 
+          <input
+            type="text"
+            placeholder="Your Name"
+            className="input-dark"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
           {!showCanvas ? (
             <>
-              <textarea 
-                placeholder="Write your message..." 
-                className="input-dark" 
+              <textarea
+                placeholder="Write your message..."
+                className="input-dark"
                 rows={4}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
@@ -102,7 +102,7 @@ export default function GuestMessages() {
               </button>
             </div>
           )}
-          
+
           <button type="submit" className="btn-gold" disabled={isSubmitting || (!name || (!text && !drawing))}>
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>
@@ -111,7 +111,7 @@ export default function GuestMessages() {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%', maxWidth: '800px' }}>
         {messages.map((msg, idx) => (
-          <motion.div 
+          <motion.div
             key={msg.id}
             initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
             whileInView={{ opacity: 1, x: 0 }}

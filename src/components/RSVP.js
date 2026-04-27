@@ -23,7 +23,7 @@ export default function RSVP() {
 
   if (submitted) {
     return (
-      <motion.div 
+      <motion.div
         className="section-container"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -37,7 +37,7 @@ export default function RSVP() {
   }
 
   return (
-    <motion.div 
+    <motion.div
       className="section-container"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -51,11 +51,11 @@ export default function RSVP() {
       <div className="glass-card" style={{ width: '100%', maxWidth: '600px' }}>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' }}>
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => setAttending(true)}
-              className="btn-gold" 
-              style={{ 
+              className="btn-gold"
+              style={{
                 background: attending === true ? 'var(--gold-glow)' : 'transparent',
                 borderColor: attending === true ? 'var(--gold-accent)' : 'rgba(255,255,255,0.2)',
                 color: attending === true ? '#fff' : 'var(--text-secondary)'
@@ -63,11 +63,11 @@ export default function RSVP() {
             >
               Joyfully Attending
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => setAttending(false)}
-              className="btn-gold" 
-              style={{ 
+              className="btn-gold"
+              style={{
                 background: attending === false ? 'rgba(255,255,255,0.1)' : 'transparent',
                 borderColor: attending === false ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.2)',
                 color: attending === false ? '#fff' : 'var(--text-secondary)'
@@ -79,24 +79,24 @@ export default function RSVP() {
 
           <AnimatePresence>
             {attending !== null && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }} 
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}
               >
                 <div style={{ paddingTop: '1rem' }}>
-                  <input 
-                    type="text" 
-                    placeholder="Your Full Name" 
-                    className="input-dark" 
+                  <input
+                    type="text"
+                    placeholder="Your Full Name"
+                    className="input-dark"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                   />
-                  <textarea 
-                    placeholder={attending ? "Any dietary requirements or song requests?" : "Leave a message for the couple..."} 
-                    className="input-dark" 
+                  <textarea
+                    placeholder={attending ? "Any dietary requirements or song requests?" : "Leave a message for the couple..."}
+                    className="input-dark"
                     rows={3}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}

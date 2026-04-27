@@ -30,7 +30,7 @@ export default function PhotoUpload() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="section-container"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -41,19 +41,19 @@ export default function PhotoUpload() {
         Shared Memories
       </h2>
       <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', textAlign: 'center', maxWidth: '600px' }}>
-        Share your photos of the event with us. 
+        Share your photos of the event with us.
       </p>
 
       <div className="glass-card" style={{ width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <input 
-          type="file" 
-          id="file-upload" 
-          style={{ display: 'none' }} 
+        <input
+          type="file"
+          id="file-upload"
+          style={{ display: 'none' }}
           onChange={handleFileChange}
           accept="image/*"
         />
-        <label 
-          htmlFor="file-upload" 
+        <label
+          htmlFor="file-upload"
           style={{
             display: 'block',
             width: '100%',
@@ -66,12 +66,12 @@ export default function PhotoUpload() {
             color: 'var(--gold-accent)'
           }}
         >
-          {file ? file.name : "Click to select a file"}
+          {file ? (<img style={{ width: '100%', height: '100%' }} src={URL.createObjectURL(file)} alt="" />) : "Click to select a file"}
         </label>
-        
-        <button 
-          onClick={handleUpload} 
-          className="btn-gold" 
+
+        <button
+          onClick={handleUpload}
+          className="btn-gold"
           disabled={!file || isUploading}
           style={{ width: '100%' }}
         >
@@ -83,9 +83,9 @@ export default function PhotoUpload() {
             <h4 style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Recent Uploads</h4>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
               {uploadedFiles.map((f, i) => (
-                <div key={i} style={{ 
-                  background: 'rgba(255,255,255,0.05)', 
-                  padding: '1rem', 
+                <div key={i} style={{
+                  background: 'rgba(255,255,255,0.05)',
+                  padding: '1rem',
                   borderRadius: '8px',
                   display: 'flex',
                   alignItems: 'center',
