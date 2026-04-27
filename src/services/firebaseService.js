@@ -91,33 +91,38 @@ export const uploadFile = async (file) => {
     }
 
     const formData = new FormData();
-    formData.append("image", file);
 
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+    formData.append("file", file);
+    formData.append("upload_preset", "wedding-invitation"); // اسم البريسيت
+    formData.append("cloud_name", "dbuokdib9");
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dbuokdib9/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     const data = await response.json();
 
     if (!response.ok) {
       return {
         success: false,
-        error: data.error || "Upload failed",
+        error: data.error?.message || "Upload failed",
       };
     }
 
     return {
       success: true,
-      id: data.id,
+      url: data.secure_url,
+      public_id: data.public_id,
       name: file.name,
     };
   } catch (error) {
-    console.error("Upload failed:", error);
-
     return {
       success: false,
-      error,
+      error: error.message,
     };
   }
 };
