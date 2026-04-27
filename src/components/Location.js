@@ -1,7 +1,10 @@
 "use client";
+import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Location() {
+  const { t } = useLanguage();
   return (
     <motion.div
       className="section-container"
@@ -11,12 +14,19 @@ export default function Location() {
       transition={{ duration: 1 }}
     >
       <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
-        Where Hearts Meet
+        {t('whereHeartsMeet')}
       </h2>
       <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', textAlign: 'center', maxWidth: '600px', lineHeight: 1.6 }}>
-        Join us at the historic Grand Hall, surrounded by elegant architecture and soft candlelight.
+        {t('locationDesc')}
         <br /><br />
-        <strong style={{ color: '#fff' }}>123 Midnight Avenue<br />The Starlight District</strong>
+        <strong style={{ color: '#fff' }}>
+          {t('address').split('\n').map((line, i) => (
+            <React.Fragment key={i}>
+              {line}
+              {i < t('address').split('\n').length - 1 && <br />}
+            </React.Fragment>
+          ))}
+        </strong>
       </p>
 
       <div className="glass-card" style={{ width: '100%', maxWidth: '800px', padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -33,7 +43,7 @@ export default function Location() {
         </div>
 
         <button className="btn-gold" style={{ marginTop: '2rem' }} onClick={() => window.open('https://maps.app.goo.gl/iUCDWB32aqwBLtRA7', '_blank')}>
-          Open in Maps
+          {t('openInMaps')}
         </button>
       </div>
     </motion.div>

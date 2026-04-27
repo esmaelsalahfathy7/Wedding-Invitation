@@ -1,10 +1,12 @@
 "use client";
 import { useCountdown } from '../hooks/useCountdown';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Countdown() {
   const targetDate = new Date("2026-06-29T19:00:00");
   const timeLeft = useCountdown(targetDate);
+  const { t } = useLanguage();
 
   const formatNumber = (num) => num.toString().padStart(2, '0');
 
@@ -17,7 +19,7 @@ export default function Countdown() {
       transition={{ duration: 1 }}
     >
       <h2 style={{ fontSize: '2.5rem', marginBottom: '3rem', textAlign: 'center' }}>
-        The Journey Begins In
+        {t('journeyBegins')}
       </h2>
 
       <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center' }}>
@@ -27,7 +29,7 @@ export default function Countdown() {
               {formatNumber(value)}
             </span>
             <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '2px' }}>
-              {unit}
+              {t(unit.toLowerCase())}
             </span>
           </div>
         ))}

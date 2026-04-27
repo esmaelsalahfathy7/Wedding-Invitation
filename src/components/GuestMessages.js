@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import CanvasDraw from './CanvasDraw';
 import { saveMessage, getMessages } from '../services/firebaseService';
+import { useLanguage } from '../context/LanguageContext';
 
 const DrawingViewer = ({ dataUrl }) => {
   const canvasRef = useRef(null);
@@ -21,6 +22,7 @@ const DrawingViewer = ({ dataUrl }) => {
 };
 
 export default function GuestMessages() {
+  const { t } = useLanguage();
   const [messages, setMessages] = useState([]);
   const [name, setName] = useState('');
   const [text, setText] = useState('');
@@ -63,17 +65,17 @@ export default function GuestMessages() {
       transition={{ duration: 1 }}
     >
       <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
-        Words of Love
+        {t('wordsOfLove')}
       </h2>
       <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', textAlign: 'center', maxWidth: '600px' }}>
-        Leave a note or a handwritten message for us to cherish.
+        {t('guestbookDesc')}
       </p>
 
       <div className="glass-card" style={{ width: '100%', maxWidth: '600px', marginBottom: '4rem' }}>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
           <input
             type="text"
-            placeholder="Your Name"
+            placeholder={t('yourName')}
             className="input-dark"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -82,7 +84,7 @@ export default function GuestMessages() {
           {!showCanvas ? (
             <>
               <textarea
-                placeholder="Write your message..."
+                placeholder={t('writeMessage')}
                 className="input-dark"
                 rows={4}
                 value={text}
@@ -90,21 +92,21 @@ export default function GuestMessages() {
                 style={{ resize: 'none' }}
               />
               <button type="button" onClick={() => setShowCanvas(true)} style={{ background: 'none', border: 'none', color: 'var(--gold-accent)', cursor: 'pointer', textDecoration: 'underline', marginBottom: '1rem', alignSelf: 'flex-start', fontFamily: 'var(--font-inter)' }}>
-                Switch to handwritten note
+                {t('switchToHandwritten')}
               </button>
             </>
           ) : (
             <div style={{ marginBottom: '1rem' }}>
               <CanvasDraw onSave={(dataUrl) => setDrawing(dataUrl)} onClear={() => setDrawing(null)} />
-              {drawing && <p style={{ color: 'var(--gold-accent)', fontSize: '0.8rem', textAlign: 'center', marginTop: '0.5rem' }}>Drawing ready to submit!</p>}
+              {drawing && <p style={{ color: 'var(--gold-accent)', fontSize: '0.8rem', textAlign: 'center', marginTop: '0.5rem' }}>{t('drawingReady')}</p>}
               <button type="button" onClick={() => { setShowCanvas(false); setDrawing(null); }} style={{ background: 'none', border: 'none', color: 'var(--gold-accent)', cursor: 'pointer', textDecoration: 'underline', alignSelf: 'flex-start', marginTop: '1rem', fontFamily: 'var(--font-inter)' }}>
-                Switch to typed message
+                {t('switchToTyped')}
               </button>
             </div>
           )}
 
           <button type="submit" className="btn-gold" disabled={isSubmitting || (!name || (!text && !drawing))}>
-            {isSubmitting ? 'Sending...' : 'Send Message'}
+            {isSubmitting ? t('sending') : t('sendMessage')}
           </button>
         </form>
       </div>

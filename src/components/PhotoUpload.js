@@ -2,8 +2,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { uploadFile } from '../services/firebaseService';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function PhotoUpload() {
+  const { t } = useLanguage();
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]); // store names/icons only
@@ -38,10 +40,10 @@ export default function PhotoUpload() {
       transition={{ duration: 1 }}
     >
       <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
-        Shared Memories
+        {t('sharedMemories')}
       </h2>
       <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', textAlign: 'center', maxWidth: '600px' }}>
-        Share your photos of the event with us.
+        {t('sharePhotosDesc')}
       </p>
 
       <div className="glass-card" style={{ width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -66,7 +68,7 @@ export default function PhotoUpload() {
             color: 'var(--gold-accent)'
           }}
         >
-          {file ? (<img style={{ width: '100%', height: '100%' }} src={URL.createObjectURL(file)} alt="" />) : "Click to select a file"}
+          {file ? (<img style={{ width: '100%', height: '100%' }} src={URL.createObjectURL(file)} alt="" />) : t('clickToSelect')}
         </label>
 
         <button
@@ -75,12 +77,12 @@ export default function PhotoUpload() {
           disabled={!file || isUploading}
           style={{ width: '100%' }}
         >
-          {isUploading ? 'Uploading...' : 'Upload File'}
+          {isUploading ? t('uploading') : t('uploadFile')}
         </button>
 
         {uploadedFiles.length > 0 && (
           <div style={{ marginTop: '2rem', width: '100%' }}>
-            <h4 style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Recent Uploads</h4>
+            <h4 style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>{t('recentUploads')}</h4>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
               {uploadedFiles.map((f, i) => (
                 <div key={i} style={{

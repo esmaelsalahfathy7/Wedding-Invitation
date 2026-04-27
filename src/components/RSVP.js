@@ -2,8 +2,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { saveRSVP } from '../services/firebaseService';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function RSVP() {
+  const { t } = useLanguage();
   const [attending, setAttending] = useState(null);
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
@@ -29,8 +31,8 @@ export default function RSVP() {
         animate={{ opacity: 1 }}
       >
         <div className="glass-card" style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-          <h2 style={{ color: 'var(--gold-accent)', marginBottom: '1rem', fontFamily: 'var(--font-playfair)' }}>Thank You</h2>
-          <p style={{ color: 'var(--text-secondary)' }}>We have received your response.</p>
+          <h2 style={{ color: 'var(--gold-accent)', marginBottom: '1rem', fontFamily: 'var(--font-playfair)' }}>{t('thankYou')}</h2>
+          <p style={{ color: 'var(--text-secondary)' }}>{t('responseReceived')}</p>
         </div>
       </motion.div>
     );
@@ -45,7 +47,7 @@ export default function RSVP() {
       transition={{ duration: 1 }}
     >
       <h2 style={{ fontSize: '2.5rem', marginBottom: '3rem', textAlign: 'center' }}>
-        Will you be there with us?
+        {t('willYouBeThere')}
       </h2>
 
       <div className="glass-card" style={{ width: '100%', maxWidth: '600px' }}>
@@ -61,7 +63,7 @@ export default function RSVP() {
                 color: attending === true ? '#fff' : 'var(--text-secondary)'
               }}
             >
-              Joyfully Attending
+              {t('joyfullyAttending')}
             </button>
             <button
               type="button"
@@ -73,7 +75,7 @@ export default function RSVP() {
                 color: attending === false ? '#fff' : 'var(--text-secondary)'
               }}
             >
-              Regretfully Decline
+              {t('regretfullyDecline')}
             </button>
           </div>
 
@@ -88,14 +90,14 @@ export default function RSVP() {
                 <div style={{ paddingTop: '1rem' }}>
                   <input
                     type="text"
-                    placeholder="Your Full Name"
+                    placeholder={t('yourFullName')}
                     className="input-dark"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                   />
                   <textarea
-                    placeholder={attending ? "Any dietary requirements or song requests?" : "Leave a message for the couple..."}
+                    placeholder={attending ? t('dietarySongReq') : t('leaveMessage')}
                     className="input-dark"
                     rows={3}
                     value={message}
@@ -103,7 +105,7 @@ export default function RSVP() {
                     style={{ resize: 'none' }}
                   />
                   <button type="submit" className="btn-gold" disabled={isSubmitting || !name} style={{ width: '100%' }}>
-                    {isSubmitting ? 'Sending...' : 'Confirm RSVP'}
+                    {isSubmitting ? t('sending') : t('confirmRsvp')}
                   </button>
                 </div>
               </motion.div>

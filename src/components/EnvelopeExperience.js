@@ -1,10 +1,12 @@
 "use client";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function EnvelopeExperience({ onComplete }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
+  const { t } = useLanguage();
 
   const handleOpen = () => {
     if (!isOpen) {
@@ -84,7 +86,7 @@ export default function EnvelopeExperience({ onComplete }) {
                   animate={{ opacity: isOpen ? 1 : 0 }}
                   transition={{ delay: 1.2 }}
                 >
-                  You are invited
+                  {t('invited')}
                 </motion.h3>
                 <motion.h1
                   style={{ fontSize: '2rem', textAlign: 'center', marginBottom: '1rem', color: '#fff' }}
@@ -92,7 +94,7 @@ export default function EnvelopeExperience({ onComplete }) {
                   animate={{ opacity: isOpen ? 1 : 0 }}
                   transition={{ delay: 1.7 }}
                 >
-                  Ahmed & Rawan
+                  {t('names')}
                 </motion.h1>
                 <motion.p
                   style={{ color: 'var(--text-secondary)', fontStyle: 'italic', fontSize: '1.1rem', fontFamily: 'var(--font-playfair)' }}
@@ -100,7 +102,7 @@ export default function EnvelopeExperience({ onComplete }) {
                   animate={{ opacity: isOpen ? 1 : 0 }}
                   transition={{ delay: 2.2 }}
                 >
-                  June 29, 2026
+                  {t('date')}
                 </motion.p>
               </motion.div>
 
@@ -157,7 +159,7 @@ export default function EnvelopeExperience({ onComplete }) {
                     alignItems: 'center'
                   }}
                 >
-                  <span style={{ fontFamily: 'var(--font-playfair)', color: '#2a220a', fontSize: '1.2rem' }}>A&R</span>
+                  <span style={{ fontFamily: 'var(--font-playfair)', color: '#2a220a', fontSize: '1.2rem' }}>{t('seal')}</span>
                 </div>
               )}
             </motion.div>
@@ -176,7 +178,7 @@ export default function EnvelopeExperience({ onComplete }) {
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                Tap to Open
+                {t('tapToOpen')}
               </motion.p>
             )}
           </div>
